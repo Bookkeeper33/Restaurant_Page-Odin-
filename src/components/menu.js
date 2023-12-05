@@ -1,3 +1,5 @@
+import createImg from "./helper";
+
 import Burger from "../images/menu/burger.png";
 import Lasagne from "../images/menu/lasagne.png";
 import Carbonara from "../images/menu/carbonara.jpg";
@@ -5,7 +7,7 @@ import Gnocchi from "../images/menu/gnocchi.png";
 import Risotto from "../images/menu/risotto.png";
 import Pizza from "../images/menu/pizza.png";
 
-export default function createMenuComponent() {
+function createMenuComponent() {
     const menu = document.createElement("div");
     const title = document.createElement("h2");
     const wrapper = document.createElement("div");
@@ -87,7 +89,7 @@ export default function createMenuComponent() {
     title.textContent = "Our Menu";
 
     meals.forEach((meal) => {
-        wrapper.appendChild(createMeal(meal));
+        wrapper.appendChild(createMenuItem(meal));
     });
 
     menu.appendChild(title);
@@ -96,18 +98,18 @@ export default function createMenuComponent() {
     return menu;
 }
 
-function createMeal(meal) {
+function createMenuItem(meal) {
     const item = document.createElement("div");
 
     item.classList.add("menu-item");
 
-    item.appendChild(createDescription(meal.name, meal.ing, meal.price));
-    item.appendChild(createImg(meal.name, meal.img));
+    item.appendChild(fillMenuItem(meal.name, meal.ing, meal.price));
+    item.appendChild(createImg("item-img", meal.name, meal.img));
 
     return item;
 }
 
-function createDescription(name, ings, cost) {
+function fillMenuItem(name, ings, cost) {
     const description = document.createElement("div");
     const title = document.createElement("h4");
     const ingredients = document.createElement("p");
@@ -126,16 +128,7 @@ function createDescription(name, ings, cost) {
     return description;
 }
 
-function createImg(name, image) {
-    const imgWrapper = document.createElement("div");
-    const img = document.createElement("img");
-
-    imgWrapper.classList.add("item-img");
-
-    img.src = image;
-    img.alt = `${name.toLowerCase()}`;
-
-    imgWrapper.appendChild(img);
-
-    return imgWrapper;
+export default function loadMenuComponent(mainElement) {
+    mainElement.textContent = "";
+    mainElement.appendChild(createMenuComponent());
 }

@@ -1,49 +1,45 @@
+import createImg from "./helper";
+
 import Icon from "../images/icon.png";
-import createHomeComponent from "./home";
-import createMenuComponent from "./menu";
+import Github from "../images/github-mark.svg";
+
+import loadHomeComponent from "./home";
+import loadMenuComponent from "./menu";
+import loadAboutComponent from "./about";
+import loadContactComponent from "./contact";
 
 function createHeader() {
-    const headerEl = document.createElement("header");
+    const header = document.createElement("header");
 
-    headerEl.appendChild(createImgWrapper());
-    headerEl.appendChild(createNav());
+    header.appendChild(createImg("icon-container", "Logo", Icon));
+    header.appendChild(createNav());
 
-    return headerEl;
+    return header;
 }
 
 function createNav() {
-    const navEl = document.createElement("nav");
-    const olEl = document.createElement("ol");
+    const nav = document.createElement("nav");
+    const ol = document.createElement("ol");
     const navItems = ["Home", "Menu", "About us", "Contact"];
 
-    navEl.id = "navbar";
-    olEl.classList.add("nav-links");
+    nav.id = "navbar";
+    ol.classList.add("nav-links");
 
     navItems.forEach((item) => {
-        const liEl = document.createElement("li");
+        const li = document.createElement("li");
 
-        liEl.classList.add("nav-item");
-        liEl.textContent = item;
+        li.id = item.toLowerCase();
+        li.classList.add("nav-item");
+        li.textContent = item;
 
-        olEl.appendChild(liEl);
+        item === "Home" ? li.classList.add("active") : "";
+
+        ol.appendChild(li);
     });
 
-    navEl.appendChild(olEl);
+    nav.appendChild(ol);
 
-    return navEl;
-}
-
-function createImgWrapper() {
-    const divEl = document.createElement("div");
-    const imgEl = document.createElement("img");
-
-    divEl.classList.add("icon-container");
-    imgEl.src = Icon;
-    imgEl.alt = "logo";
-
-    divEl.appendChild(imgEl);
-
-    return divEl;
+    return nav;
 }
 
 function createMain() {
@@ -54,34 +50,71 @@ function createMain() {
 }
 
 function createFooter() {
-    const footerEl = document.createElement("footer");
+    const footer = document.createElement("footer");
     const paragraph = document.createElement("p");
-    const aEl = document.createElement("a");
+    const a = document.createElement("a");
+    const span = document.createElement("span");
+    const img = document.createElement("img");
 
     paragraph.textContent = "Created by ";
-    aEl.textContent = "Bookkeeper33";
-    aEl.href = "https://github.com/Bookkeeper33";
+    a.textContent = "Bookkeeper33";
+    a.href = "https://github.com/Bookkeeper33";
 
-    paragraph.appendChild(aEl);
-    footerEl.appendChild(paragraph);
+    img.src = Github;
+    img.alt = "github";
 
-    return footerEl;
+    span.classList.add("github");
+
+    span.appendChild(img);
+    paragraph.appendChild(a);
+    paragraph.appendChild(span);
+    footer.appendChild(paragraph);
+
+    return footer;
 }
 
-function loadComponent() {
-    const main = document.getElementById("main");
+function loadComponent(main) {
+    const nav = document.getElementById("navbar");
 
-    main.textContent = "";
-    main.appendChild(createMenuComponent());
-    // main.appendChild(createHomeComponent());
+    nav.addEventListener("click", (event) => {
+        if (event.target.tagName === "LI") {
+            const id = event.target.id.toLowerCase();
+
+            if (id.includes("home")) {
+                loadHomeComponent(main);
+            }
+            if (id.includes("menu")) {
+                loadMenuComponent(main);
+            }
+            if (id.includes("about us")) {
+                loadAboutComponent(main);
+            }
+            if (id.includes("contact")) {
+                loadContactComponent(main);
+            }
+
+            setActive(event.target);
+        }
+    });
 }
 
-export default function loadElements() {
+function setActive(target) {
+    const navLinks = document.querySelectorAll(".nav-item");
+
+    navLinks.forEach((link) => {
+        link.classList.remove("active");
+        target.classList.add("active");
+    });
+}
+
+export default function init() {
     const content = document.getElementById("content");
 
     content.appendChild(createHeader());
     content.appendChild(createMain());
     content.appendChild(createFooter());
 
-    loadComponent();
+    const main = document.getElementById("main");
+    loadHomeComponent(main);
+    loadComponent(main);
 }

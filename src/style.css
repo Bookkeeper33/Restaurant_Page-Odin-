@@ -18,6 +18,11 @@ body {
     );
 }
 
+a {
+    text-decoration: none;
+    color: #52525b;
+}
+
 #content {
     display: flex;
     flex-direction: column;
@@ -43,10 +48,6 @@ header {
     text-align: center;
 }
 
-.active {
-    border-bottom: 0.1em solid rgb(198, 121, 160);
-}
-
 .nav-item {
     position: relative;
     cursor: pointer;
@@ -67,6 +68,18 @@ header {
 
 .nav-item:hover::after,
 .nav-item:focus::after {
+    opacity: 1;
+    transform: scaleX(1);
+}
+
+.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0.1em;
+    background-color: rgb(198, 121, 160);
     opacity: 1;
     transform: scaleX(1);
 }
@@ -158,7 +171,7 @@ main {
 
 .menu-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     justify-content: center;
     gap: 2.5rem;
     padding: 25px;
@@ -175,6 +188,13 @@ main {
     border-radius: 20px;
     -webkit-box-shadow: 1px 1px 20px 2px rgba(0, 0, 0, 0.24);
     box-shadow: 1px 1px 20px 2px rgba(0, 0, 0, 0.24);
+    transition: all 0.4s ease-in;
+    cursor: pointer;
+}
+
+.menu-item:hover {
+    transform: scale(1.1);
+    border: 3px dotted #52525b;
 }
 
 .item-description {
@@ -198,6 +218,8 @@ main {
 
 .item-img img {
     border-radius: 15.33%;
+    width: 200px;
+    height: auto;
 }
 
 /* About us section */
@@ -289,6 +311,9 @@ main {
 
 /* footer */
 footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 15px 15px 0 0;
     background-color: #f1f5f9;
     text-align: center;
@@ -297,6 +322,40 @@ footer {
     padding: 1rem;
     -webkit-box-shadow: rgba(0, 0, 0, 0.22) 0px 10px 10px;
     box-shadow: rgba(0, 0, 0, 0.22) 0px 10px 10px;
+}
+
+.github {
+    margin-left: 5px;
+}
+
+.github > img {
+    width: 24px;
+    height: 24px;
+    transition: all 0.4s ease-in-out;
+}
+
+.github > img:hover {
+    transform: rotate(360deg);
+}
+
+/* Fade in animation */
+.home,
+.menu,
+.about-us,
+.contacts {
+    animation: 1.5s fadeIn;
+    animation-fill-mode: forwards;
+    visibility: hidden;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        visibility: visible;
+        opacity: 1;
+    }
 }
 
 @media screen and (max-width: 700px) {
@@ -311,6 +370,7 @@ footer {
     .home-description,
     .description-about {
         flex-basis: 100%;
+        align-items: center;
     }
 
     .home-image,
@@ -320,6 +380,10 @@ footer {
     .working-hours {
         flex-grow: 1;
         flex-shrink: 1;
+    }
+
+    .item-description > p {
+        font-size: 0.8rem;
     }
 
     .description-about h2 {
@@ -338,5 +402,10 @@ footer {
 
     footer {
         font-size: 1.1rem;
+    }
+
+    .github > img {
+        width: 18px;
+        height: 18px;
     }
 }

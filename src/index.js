@@ -1,3 +1,5 @@
-import loadElements from "./components/init";
+import init from "./components/init";
+import "./reset.css";
+import "./style.css";
 
-loadElements();
+init();
