@@ -9,4 +9,4 @@ Built with:
 -   [JS](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 -   Html/Css
 
-### [live demo](https://igorashs.github.io/restaurant-page/) :shipit:
+### [live demo](https://bookkeeper33.github.io/Restaurant_Page-Odin-/) :shipit:
